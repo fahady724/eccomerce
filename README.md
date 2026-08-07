@@ -63,9 +63,9 @@ The application will start and open the storefront.
 
 # Admin Credentials
 
-Username: fahad
+Username: admin
 
-Password: 14529882
+Password: admin01
 
 
 # Features
