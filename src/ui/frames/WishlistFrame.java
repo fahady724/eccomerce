@@ -23,7 +23,9 @@ import ui.AppFrame;
 import ui.Theme;
 import ui.components.UiFactory;
 
-
+/**
+ * Displays the current user's saved products and supports cart actions.
+ */
 public class WishlistFrame extends JFrame {
     private final AppFrame app;
     private final DefaultTableModel model = new DefaultTableModel(new Object[]{"Product", "Category", "Price", "Stock"}, 0) {
@@ -35,6 +37,9 @@ public class WishlistFrame extends JFrame {
     private final JLabel countLabel = new JLabel();
     private List<Product> products;
 
+    /**
+     * Creates a wishlist window for the current user.
+     */
     public WishlistFrame(AppFrame app) {
         super("OmniCommerce - Wishlist");
         this.app = app;
@@ -46,6 +51,9 @@ public class WishlistFrame extends JFrame {
         refreshData();
     }
 
+    /**
+     * Builds the wishlist UI and action buttons.
+     */
     private void buildUi() {
         JPanel root = new JPanel(new BorderLayout(16, 16));
         root.setBackground(Theme.BACKGROUND);
@@ -88,6 +96,9 @@ public class WishlistFrame extends JFrame {
         setContentPane(root);
     }
 
+    /**
+     * Reloads the wishlist data from the service layer.
+     */
     private void refreshData() {
         products = WishlistService.getAll(app.getCurrentUser().getId());
         model.setRowCount(0);
@@ -97,6 +108,9 @@ public class WishlistFrame extends JFrame {
         countLabel.setText(products.size() + (products.size() == 1 ? " saved product" : " saved products"));
     }
 
+    /**
+     * Returns the currently selected wishlist product.
+     */
     private Product selectedProduct() {
         int row = table.getSelectedRow();
         if (row < 0) {
@@ -106,11 +120,17 @@ public class WishlistFrame extends JFrame {
         return products.get(table.convertRowIndexToModel(row));
     }
 
+    /**
+     * Opens the details dialog for the selected product.
+     */
     private void showSelectedDetails() {
         Product product = selectedProduct();
         if (product != null) new ProductDetailsDialog(this, app, product).setVisible(true);
     }
 
+    /**
+     * Removes the selected product from the wishlist.
+     */
     private void removeSelected() {
         Product product = selectedProduct();
         if (product == null) return;
@@ -118,6 +138,9 @@ public class WishlistFrame extends JFrame {
         refreshData();
     }
 
+    /**
+     * Moves the selected product to the user's cart.
+     */
     private void moveSelectedToCart(JButton button) {
         Product product = selectedProduct();
         if (product == null) return;

@@ -9,11 +9,20 @@ import java.util.List;
 import model.Product;
 import util.DBConnection;
 
+/**
+ * Provides product catalog operations for the e-commerce application.
+ */
 public class ProductService {
+    /**
+     * Adds a new product with the specified details.
+     */
     public static void addProduct(String name, String description, double price, int stock, String category) {
         addProduct(name, description, price, stock, category, null);
     }
 
+    /**
+     * Adds a new product with the specified details and image path.
+     */
     public static void addProduct(String name, String description, double price, int stock, String category, String imagePath) {
         String sql = "INSERT INTO products (name, description, price, stock, category, image_path) " + "VALUES (?, ?, ?, ?, ?, ?)";
         try {
@@ -32,14 +41,23 @@ public class ProductService {
         }
     }
 
+    /**
+     * Returns all products ordered by identifier in descending order.
+     */
     public static List<Product> getAllProducts() {
         return findProducts("SELECT * FROM products ORDER BY id DESC", null, null);
     }
 
+    /**
+     * Searches products by name.
+     */
     public static List<Product> searchProduct(String name) {
         return findProducts("SELECT * FROM products WHERE name LIKE ? ORDER BY id DESC", "%" + name + "%", null);
     }
 
+    /**
+     * Searches products by name and category.
+     */
     public static List<Product> searchProduct(String name, String category) {
         return findProducts(
                 "SELECT * FROM products WHERE name LIKE ? AND category LIKE ? ORDER BY id DESC", "%" + name + "%", "%" + category + "%");
@@ -61,10 +79,16 @@ public class ProductService {
         return products;
     }
 
+    /**
+     * Updates an existing product with the specified details.
+     */
     public static void updateProduct(int id, String name, String description, double price, int stock, String category) {
         updateProduct(id, name, description, price, stock, category, null);
     }
 
+    /**
+     * Updates an existing product with the specified details and image path.
+     */
     public static void updateProduct(int id, String name, String description, double price, int stock, String category, String imagePath) {
         String sql = "UPDATE products SET name=?, description=?, price=?, stock=?, category=?, "
                 + "image_path=? WHERE id=?";
@@ -85,6 +109,9 @@ public class ProductService {
         }
     }
 
+    /**
+     * Deletes the product with the specified identifier.
+     */
     public static void deleteProduct(int id) {
         try {
             Connection conn = DBConnection.getConnection();
@@ -97,6 +124,9 @@ public class ProductService {
         }
     }
 
+    /**
+     * Returns the product with the specified identifier.
+     */
     public static Product getProductById(int id) {
         try {
             Connection conn = DBConnection.getConnection();

@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Represents a user account in the e-commerce system.
+ */
 public abstract class User {
     private int id;
     private String username;
@@ -9,6 +12,9 @@ public abstract class User {
     private String address;
     private String role;
 
+    /**
+     * Creates a user with the specified account details and role.
+     */
     public User(int id, String username, String password, String email, String phone, String address, String role){
         this.id = id;
         this.username = username;
@@ -51,6 +57,9 @@ public abstract class User {
         return address;
     }
 
+    /**
+     * Returns the user's role.
+     */
     public abstract String getRole();
 
     @Override

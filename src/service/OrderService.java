@@ -12,14 +12,22 @@ import model.Order;
 import model.OrderItem;
 import util.DBConnection;
 
+/**
+ * Provides order management operations for the e-commerce application.
+ */
 public class OrderService {
 
+    /**
+     * Places a new order for the specified customer and items.
+     */
     public static void placeOrder(int customerId, List<OrderItem> items) throws InvalidQuantityException {
         placeOrderAndReturnId(customerId, items);
     }
 
+    /**
+     * Places a new order and returns the generated order identifier.
+     */
     public static int placeOrderAndReturnId(int customerId, List<OrderItem> items) throws InvalidQuantityException {
-        // Step 1 validate stock before doing anything
         for (OrderItem item : items) {
             int available = item.getProduct().getStockQuantity();
             int requested = item.getQuantity();
@@ -28,7 +36,6 @@ public class OrderService {
             }
         }
 
-        // Step 2 calculate total
         double total = 0;
         for (OrderItem item : items) {
             total += item.getTotal();
@@ -36,10 +43,8 @@ public class OrderService {
 
         Connection conn = DBConnection.getConnection();
         try {
-            // Step 3 start transaction
             conn.setAutoCommit(false);
 
-            // Step 4 insert order
             String sql = "INSERT INTO orders (customer_id, total_amount, status, order_date) VALUES (?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, customerId);
@@ -48,12 +53,10 @@ public class OrderService {
             stmt.setString(4, java.time.LocalDateTime.now().toString());
             stmt.executeUpdate();
 
-            // Step 5 get generated order ID
             ResultSet keys = stmt.getGeneratedKeys();
             int orderId = keys.getInt(1);
             stmt.close();
 
-            // Step 6 insert order items
             String itemSql = "INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
             for (OrderItem item : items) {
                 PreparedStatement itemStmt = conn.prepareStatement(itemSql);
@@ -65,7 +68,6 @@ public class OrderService {
                 itemStmt.close();
             }
 
-            // Step 7 update stock for each product
             String stockSql = "UPDATE products SET stock=? WHERE id=?";
             for (OrderItem item : items) {
                 PreparedStatement stockStmt = conn.prepareStatement(stockSql);
@@ -76,13 +78,11 @@ public class OrderService {
                 stockStmt.close();
             }
 
-            // Step 8 commit everything
             conn.commit();
             conn.setAutoCommit(true);
             return orderId;
 
         } catch (SQLException e) {
-            // Step 9 rollback if anything fails
             try {
                 conn.rollback();
                 conn.setAutoCommit(true);
@@ -94,6 +94,9 @@ public class OrderService {
         }
     }
 
+    /**
+     * Returns all orders placed by the specified customer.
+     */
     public static List<Order> getOrdersByCustomer(int customerId) {
         List<Order> orders = new ArrayList<>();
         try {
@@ -118,6 +121,9 @@ public class OrderService {
         return orders;
     }
 
+    /**
+     * Returns all orders in the system.
+     */
     public static List<Order> getAllOrders() {
         List<Order> orders = new ArrayList<>();
         try {
@@ -141,6 +147,9 @@ public class OrderService {
         return orders;
     }
 
+    /**
+     * Updates the status of an existing order.
+     */
     public static void updateOrderStatus(int orderId, String status) {
         try {
             Connection conn = DBConnection.getConnection();
@@ -155,7 +164,9 @@ public class OrderService {
         }
     }
 
-
+    /**
+     * Returns all items belonging to the specified order.
+     */
     public static List<OrderItem> getOrderItems(int orderId) {
         List<OrderItem> items = new ArrayList<>();
         String sql = "SELECT p.id, p.name, p.description, p.price, p.stock, p.category, " + "oi.quantity, oi.price AS ordered_price FROM order_items oi " + "JOIN products p ON p.id = oi.product_id WHERE oi.order_id = ?";

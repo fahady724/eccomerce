@@ -1,9 +1,9 @@
 package ui.components;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,18 +14,29 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicButtonUI;
 import ui.Theme;
 
-
+/**
+ * Provides reusable Swing UI components for the application.
+ */
 public final class UiFactory {
     private UiFactory() {}
 
+    /**
+     * Creates a primary action button with the application theme.
+     */
     public static JButton primaryButton(String text) {
         return filledButton(text, Theme.PRIMARY, Color.WHITE);
     }
 
+    /**
+     * Creates a secondary action button with the application theme.
+     */
     public static JButton secondaryButton(String text) {
         return filledButton(text, Theme.SURFACE_SOFT, Theme.TEXT);
     }
 
+    /**
+     * Creates a danger-styled button for destructive actions.
+     */
     public static JButton dangerButton(String text) {
         return filledButton(text, Theme.DANGER, Color.WHITE);
     }
@@ -49,6 +60,9 @@ public final class UiFactory {
         return button;
     }
 
+    /**
+     * Creates the application brand logo panel.
+     */
     public static JPanel brandLogo() {
         JPanel brand = new JPanel(new BorderLayout(10, 0));
         brand.setOpaque(false);
@@ -70,6 +84,9 @@ public final class UiFactory {
         return brand;
     }
 
+    /**
+     * Creates a styled text field for user input.
+     */
     public static JTextField textField(int columns) {
         JTextField field = new JTextField(columns);
         field.setFont(Theme.BODY);
@@ -78,6 +95,9 @@ public final class UiFactory {
         return field;
     }
 
+    /**
+     * Creates a muted label for secondary information.
+     */
     public static JLabel mutedLabel(String text) {
         JLabel label = new JLabel(text);
         label.setFont(Theme.BODY);
@@ -85,6 +105,9 @@ public final class UiFactory {
         return label;
     }
 
+    /**
+     * Creates a styled card container panel.
+     */
     public static JPanel cardPanel() {
         JPanel panel = new JPanel();
         panel.setBackground(Theme.SURFACE);

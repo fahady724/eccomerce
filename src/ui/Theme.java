@@ -3,7 +3,9 @@ package ui;
 import java.awt.Color;
 import java.awt.Font;
 
-
+/**
+ * Defines the shared visual styling constants for the application UI.
+ */
 public final class Theme {
     private Theme() {}
 

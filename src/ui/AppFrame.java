@@ -11,7 +11,9 @@ import ui.panels.LoginPanel;
 import ui.panels.RegisterPanel;
 import ui.panels.StorefrontPanel;
 
-
+/**
+ * Hosts the application's main screen flow and navigation state.
+ */
 public class AppFrame extends JFrame {
     public static final String STORE = "store";
     public static final String LOGIN = "login";
@@ -30,6 +32,9 @@ public class AppFrame extends JFrame {
 
     private User currentUser;
 
+    /**
+     * Creates the main application window and initializes all screens.
+     */
     public AppFrame() {
         super("OmniCommerce");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,6 +59,9 @@ public class AppFrame extends JFrame {
     }
 
   
+    /**
+     * Displays the requested screen and refreshes any dependent content.
+     */
     public void showScreen(String screenName) {
         if (LOGIN.equals(screenName)) {
             loginPanel.prepareForDisplay();
@@ -70,6 +78,9 @@ public class AppFrame extends JFrame {
         cardContainer.repaint();
     }
 
+    /**
+     * Completes the login flow for the specified user.
+     */
     public void completeLogin(User user) {
         currentUser = user;
         loginPanel.clearForm();
@@ -89,6 +100,9 @@ public class AppFrame extends JFrame {
         return currentUser != null && "ADMIN".equalsIgnoreCase(currentUser.getRole());
     }
 
+    /**
+     * Logs the current user out and returns to the storefront.
+     */
     public void logout() {
         currentUser = null;
         loginPanel.clearForm();

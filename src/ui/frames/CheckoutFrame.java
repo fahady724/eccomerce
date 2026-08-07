@@ -39,7 +39,9 @@ import ui.AppFrame;
 import ui.Theme;
 import ui.components.UiFactory;
 
-/** Checkout and payment-selection window. */
+/**
+ * Handles checkout and payment selection for the current order.
+ */
 public class CheckoutFrame extends JFrame {
     private final AppFrame app;
     private final List<OrderItem> items;
@@ -59,6 +61,9 @@ public class CheckoutFrame extends JFrame {
     private final JPasswordField cvv = new JPasswordField(20);
     private final JTextField expiry = UiFactory.textField(20);
 
+    /**
+     * Creates a checkout window for the selected cart items.
+     */
     public CheckoutFrame(AppFrame app, List<OrderItem> items) {
         super("OmniCommerce - Checkout");
         this.app = app;
@@ -71,6 +76,9 @@ public class CheckoutFrame extends JFrame {
         buildUi();
     }
 
+    /**
+     * Builds the checkout window UI.
+     */
     private void buildUi() {
         JPanel root = new JPanel(new BorderLayout(0, 18));
         root.setBackground(Theme.BACKGROUND);
@@ -125,6 +133,9 @@ public class CheckoutFrame extends JFrame {
         getRootPane().setDefaultButton(placeOrder);
     }
 
+    /**
+     * Creates the order summary panel shown on the left side of the checkout UI.
+     */
     private JPanel createOrderPanel() {
         JPanel panel = UiFactory.cardPanel();
         panel.setLayout(new BorderLayout(0, 16));
@@ -169,6 +180,9 @@ public class CheckoutFrame extends JFrame {
         return panel;
     }
 
+    /**
+     * Adds a labeled information row to the order summary panel.
+     */
     private void addInfoRow(JPanel panel, GridBagConstraints gbc, String labelText, String valueText) {
         gbc.gridy++;
         gbc.gridx = 0;
@@ -190,6 +204,9 @@ public class CheckoutFrame extends JFrame {
         panel.add(value, gbc);
     }
 
+    /**
+     * Creates the payment method selection panel shown on the right side of the checkout UI.
+     */
     private JPanel createPaymentPanel() {
         JPanel panel = UiFactory.cardPanel();
         panel.setLayout(new BorderLayout(0, 16));
@@ -240,6 +257,9 @@ public class CheckoutFrame extends JFrame {
         return panel;
     }
 
+    /**
+     * Creates the placeholder payment card shown for cash-on-delivery.
+     */
     private JPanel createEmptyPaymentCard() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setOpaque(false);
@@ -249,6 +269,9 @@ public class CheckoutFrame extends JFrame {
         return panel;
     }
 
+    /**
+     * Creates a form panel for payment details based on the given labels and components.
+     */
     private JPanel createFormPanel(String[] labels, Component[] components) {
         JPanel form = new JPanel(new GridBagLayout());
         form.setOpaque(false);
@@ -276,6 +299,9 @@ public class CheckoutFrame extends JFrame {
         return form;
     }
 
+    /**
+     * Submits the current order and processes the selected payment method.
+     */
     private void submitOrder() {
         Payment payment;
         String method;
@@ -321,6 +347,9 @@ public class CheckoutFrame extends JFrame {
         }.execute();
     }
 
+    /**
+     * Returns a safe display value for optional customer information.
+     */
     private String safe(String value) {
         return value == null || value.isBlank() ? "Not provided" : value;
     }

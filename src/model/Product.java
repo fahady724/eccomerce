@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Represents a product available in the e-commerce catalog.
+ */
 public class Product {
     private int id;
     private String name;
@@ -9,18 +12,30 @@ public class Product {
     private String category;
     private String imagePath;
 
+    /**
+     * Creates a product with the specified basic details.
+     */
     public Product(String name, String description, double price, int stockQuantity, String category) {
         this(name, description, price, stockQuantity, category, null);
     }
 
+    /**
+     * Creates a product with the specified basic details and image path.
+     */
     public Product(String name, String description, double price, int stockQuantity, String category, String imagePath) {
         this(0, name, description, price, stockQuantity, category, imagePath);
     }
 
+    /**
+     * Creates a product with the specified identifier and basic details.
+     */
     public Product(int id, String name, String description, double price, int stockQuantity, String category) {
         this(id, name, description, price, stockQuantity, category, null);
     }
 
+    /**
+     * Creates a product with the specified identifier, details, and image path.
+     */
     public Product(int id, String name, String description, double price, int stockQuantity, String category, String imagePath) {
         this.id = id;
         this.name = name;
@@ -83,6 +98,9 @@ public class Product {
         this.imagePath = imagePath; 
     }
 
+    /**
+     * Reduces the stock quantity when the requested amount is available.
+     */
     public void reduceStock(int quantity) {
         if (quantity <= stockQuantity) {
             this.stockQuantity -= quantity;

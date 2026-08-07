@@ -9,8 +9,14 @@ import java.util.List;
 import model.Product;
 import util.DBConnection;
 
+/**
+ * Provides reporting operations for sales and inventory data.
+ */
 public class ReportService {
 
+    /**
+     * Returns the total sales amount across all orders.
+     */
     public static double getTotalSales() {
         try {
             Connection conn = DBConnection.getConnection();
@@ -29,6 +35,9 @@ public class ReportService {
         return 0.0;
     }
 
+    /**
+     * Returns the total number of orders in the system.
+     */
     public static int getTotalOrders() {
          try {
             Connection conn = DBConnection.getConnection();
@@ -47,6 +56,9 @@ public class ReportService {
         return 0;
     }
 
+    /**
+     * Returns the total number of customer accounts.
+     */
     public static int getTotalCustomers() {
         try {
             Connection conn = DBConnection.getConnection();
@@ -67,6 +79,9 @@ public class ReportService {
         return 0;
     }
 
+    /**
+     * Returns products that are below the low-stock threshold.
+     */
     public static List<Product> getLowStockProducts(){
         try {
             Connection conn = DBConnection.getConnection();
@@ -90,6 +105,10 @@ public class ReportService {
         }
         return new ArrayList<>();
     }
+
+    /**
+     * Returns the most frequently ordered products.
+     */
     public static List<Product> getTopProducts(){
         try {
             Connection conn = DBConnection.getConnection();
@@ -115,7 +134,9 @@ public class ReportService {
         return new ArrayList<>();
     }
 
-
+    /**
+     * Returns monthly sales data for the latest 12 months.
+     */
     public static List<Object[]> getSalesByMonth() {
         List<Object[]> rows = new ArrayList<>();
         String sql = "SELECT substr(order_date,1,7) AS month, COUNT(*) AS orders, " + "COALESCE(SUM(total_amount),0) AS revenue FROM orders " + "GROUP BY substr(order_date,1,7) ORDER BY month DESC LIMIT 12";
@@ -129,6 +150,9 @@ public class ReportService {
         return rows;
     }
 
+    /**
+     * Returns sales data grouped by product category.
+     */
     public static List<Object[]> getSalesByCategory() {
         List<Object[]> rows = new ArrayList<>();
         String sql = "SELECT p.category, COALESCE(SUM(oi.quantity),0) AS units, " + "COALESCE(SUM(oi.quantity * oi.price),0) AS revenue " + "FROM order_items oi JOIN products p ON p.id=oi.product_id " + "GROUP BY p.category ORDER BY revenue DESC";
@@ -144,6 +168,9 @@ public class ReportService {
         return rows;
     }
 
+    /**
+     * Returns an order status summary.
+     */
     public static List<Object[]> getOrderStatusSummary() {
         List<Object[]> rows = new ArrayList<>();
         String sql = "SELECT status, COUNT(*) AS total FROM orders GROUP BY status ORDER BY total DESC";

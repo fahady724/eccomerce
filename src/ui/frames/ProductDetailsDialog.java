@@ -28,12 +28,17 @@ import ui.Theme;
 import ui.components.UiFactory;
 import util.ImageUtil;
 
-
+/**
+ * Displays detailed product information and supports wishlist and cart actions.
+ */
 public class ProductDetailsDialog extends JDialog {
     private final AppFrame app;
     private final Product product;
     private final JSpinner quantity;
 
+    /**
+     * Creates a dialog showing the specified product details.
+     */
     public ProductDetailsDialog(Component owner, AppFrame app, Product product) {
         super(owner instanceof JFrame ? (JFrame) owner : app, "Product Details", true);
         this.app = app;
@@ -47,6 +52,9 @@ public class ProductDetailsDialog extends JDialog {
         buildUi();
     }
 
+    /**
+     * Builds the dialog UI with product details and action controls.
+     */
     private void buildUi() {
         JPanel root = new JPanel(new BorderLayout(20, 16));
         root.setBackground(Theme.BACKGROUND);
@@ -151,6 +159,9 @@ public class ProductDetailsDialog extends JDialog {
         getRootPane().registerKeyboardAction(e -> dispose(), javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0), javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW);
     }
 
+    /**
+     * Ensures the current user is logged in as a customer before continuing.
+     */
     private boolean requireCustomerLogin() {
         if (!app.isLoggedIn()) {
             JOptionPane.showMessageDialog(this, "Please log in to continue.", "Login required", JOptionPane.INFORMATION_MESSAGE);
@@ -161,6 +172,9 @@ public class ProductDetailsDialog extends JDialog {
         return !app.isAdmin();
     }
 
+    /**
+     * Saves the current product to the user's wishlist.
+     */
     private void saveWishlist(JButton button) {
         if (!requireCustomerLogin()) return;
         if (WishlistService.contains(app.getCurrentUser().getId(), product.getId())) {
@@ -173,6 +187,9 @@ public class ProductDetailsDialog extends JDialog {
         }
     }
 
+    /**
+     * Adds the selected quantity of the product to the user's cart.
+     */
     private void addToCart(JButton button) {
         if (!requireCustomerLogin()) return;
         int requested = (Integer) quantity.getValue();

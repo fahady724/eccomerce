@@ -11,11 +11,15 @@ import model.OrderItem;
 import model.Product;
 import util.DBConnection;
 
+/**
+ * Provides cart management operations for customers.
+ */
 public class CartService {
 
-    // Add item to cart — if already exists, update quantity
+    /**
+     * Adds a product to the cart or updates its quantity when it already exists.
+     */
     public static boolean addToCart(int customerId, int productId, int quantity) throws InvalidQuantityException {
-        // Check stock first
         Product product = ProductService.getProductById(productId);
         if (product == null) {
             return false;
@@ -27,7 +31,6 @@ public class CartService {
         try {
             Connection conn = DBConnection.getConnection();
 
-            // Check if already in cart
             String checkSql = "SELECT id, quantity FROM cart WHERE customer_id = ? AND product_id = ?";
             PreparedStatement checkStmt = conn.prepareStatement(checkSql);
             checkStmt.setInt(1, customerId);
@@ -35,7 +38,6 @@ public class CartService {
             ResultSet rs = checkStmt.executeQuery();
 
             if (rs.next()) {
-                // Already in cart — validate the combined quantity before updating
                 int existingQty = rs.getInt("quantity");
                 int cartId = rs.getInt("id");
                 int newQuantity = existingQty + quantity;
@@ -52,7 +54,6 @@ public class CartService {
                 updateStmt.executeUpdate();
                 updateStmt.close();
             } else {
-                // Not in cart — insert new
                 checkStmt.close();
                 String insertSql = "INSERT INTO cart (customer_id, product_id, quantity) VALUES (?, ?, ?)";
                 PreparedStatement insertStmt = conn.prepareStatement(insertSql);
@@ -69,7 +70,9 @@ public class CartService {
         }
     }
 
-    /** Returns the total quantity of items currently stored in a customer's cart. */
+    /**
+     * Returns the total quantity of items currently stored in a customer's cart.
+     */
     public static int getCartItemCount(int customerId) {
         String sql = "SELECT COALESCE(SUM(quantity), 0) FROM cart WHERE customer_id = ?";
         try {
@@ -86,7 +89,9 @@ public class CartService {
         }
     }
 
-    // Get all items in cart for a customer
+    /**
+     * Returns all items currently in the customer's cart.
+     */
     public static List<OrderItem> getCart(int customerId) {
         List<OrderItem> cartItems = new ArrayList<>();
         try {
@@ -116,7 +121,9 @@ public class CartService {
         return cartItems;
     }
 
-    // Remove one product from cart
+    /**
+     * Removes a product from the customer's cart.
+     */
     public static void removeFromCart(int customerId, int productId) {
         try {
             Connection conn = DBConnection.getConnection();
@@ -131,7 +138,9 @@ public class CartService {
         }
     }
 
-    // Clear entire cart
+    /**
+     * Clears all items from the customer's cart.
+     */
     public static void clearCart(int customerId) {
         try {
             Connection conn = DBConnection.getConnection();
@@ -145,7 +154,9 @@ public class CartService {
         }
     }
 
-    // Checkout — convert cart to order then clear cart
+    /**
+     * Checks out the current cart by placing an order and clearing the cart.
+     */
     public static void checkout(int customerId) throws InvalidQuantityException {
         List<OrderItem> items = getCart(customerId);
         if (items.isEmpty()) {
@@ -156,7 +167,9 @@ public class CartService {
         clearCart(customerId);
     }
 
-    // Get total price of cart
+    /**
+     * Returns the total price of all items in the customer's cart.
+     */
     public static double getCartTotal(int customerId) {
         List<OrderItem> items = getCart(customerId);
         double total = 0;

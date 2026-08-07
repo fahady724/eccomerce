@@ -2,6 +2,9 @@ package model;
 
 import java.util.List;
 
+/**
+ * Represents an order placed by a customer.
+ */
 public class Order {
 
     private int orderId;
@@ -34,10 +37,16 @@ public class Order {
         return orderDate; 
     }  
     
+    /**
+     * Creates an order with a pending status.
+     */
     public Order(int orderId, int customerId, double totalAmount, List<OrderItem> orderItems, String orderDate) {
         this(orderId, customerId, totalAmount, orderItems, "PENDING", orderDate);
     }
 
+    /**
+     * Creates an order with the specified status and date.
+     */
     public Order(int orderId, int customerId, double totalAmount, List<OrderItem> orderItems, String status, String orderDate) {
         this.orderId = orderId;
         this.customerId = customerId;

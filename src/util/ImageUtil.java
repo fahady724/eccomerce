@@ -9,12 +9,17 @@ import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 import javax.swing.ImageIcon;
 
-
+/**
+ * Provides utility methods for storing and scaling product images.
+ */
 public final class ImageUtil {
     private static final Path PRODUCT_IMAGE_DIR = Path.of("data", "product_images");
 
     private ImageUtil() {}
 
+    /**
+     * Copies a product image into the application image directory.
+     */
     public static String copyProductImage(File source) throws IOException {
         if (source == null || !source.isFile()) return null;
         Files.createDirectories(PRODUCT_IMAGE_DIR);
@@ -25,6 +30,9 @@ public final class ImageUtil {
         return target.toString().replace('\\', '/');
     }
 
+    /**
+     * Returns a scaled icon for the specified image path.
+     */
     public static ImageIcon scaledIcon(String imagePath, int width, int height) {
         if (imagePath == null || imagePath.isBlank()) return null;
         File file = new File(imagePath);

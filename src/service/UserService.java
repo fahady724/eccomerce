@@ -9,10 +9,15 @@ import java.util.List;
 import model.Customer;
 import util.DBConnection;
 
-/** Database operations related to customer profiles and administration. */
+/**
+ * Provides database operations for customer profiles and administration.
+ */
 public final class UserService {
     private UserService() {}
 
+    /**
+     * Returns all customer accounts ordered by identifier in descending order.
+     */
     public static List<Customer> getAllCustomers() {
         List<Customer> customers = new ArrayList<>();
         String sql = "SELECT * FROM users WHERE role = 'CUSTOMER' ORDER BY id DESC";
@@ -28,6 +33,9 @@ public final class UserService {
         return customers;
     }
 
+    /**
+     * Updates the profile details for the specified user.
+     */
     public static boolean updateProfile(int userId, String email, String phone, String address) {
         String sql = "UPDATE users SET email = ?, phone = ?, address = ? WHERE id = ?";
         Connection conn = DBConnection.getConnection();
@@ -43,6 +51,9 @@ public final class UserService {
         }
     }
 
+    /**
+     * Deletes the specified customer account.
+     */
     public static boolean deleteCustomer(int customerId) {
         String sql = "DELETE FROM users WHERE id = ? AND role = 'CUSTOMER'";
         Connection conn = DBConnection.getConnection();

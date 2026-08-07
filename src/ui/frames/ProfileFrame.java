@@ -18,13 +18,18 @@ import ui.AppFrame;
 import ui.Theme;
 import ui.components.UiFactory;
 
-
+/**
+ * Displays and updates the current user's profile details.
+ */
 public class ProfileFrame extends JFrame {
     private final AppFrame app;
     private final JTextField email = UiFactory.textField(24);
     private final JTextField phone = UiFactory.textField(24);
     private final JTextField address = UiFactory.textField(24);
 
+    /**
+     * Creates a profile window for the current user.
+     */
     public ProfileFrame(AppFrame app) {
         super("OmniCommerce - My Profile");
         this.app = app;
@@ -35,6 +40,9 @@ public class ProfileFrame extends JFrame {
         buildUi();
     }
 
+    /**
+     * Builds the profile form and action buttons.
+     */
     private void buildUi() {
         User user = app.getCurrentUser();
         JPanel root = new JPanel(new BorderLayout(0, 18));
@@ -77,6 +85,9 @@ public class ProfileFrame extends JFrame {
         getRootPane().setDefaultButton(save);
     }
 
+    /**
+     * Adds a non-editable field to the profile form.
+     */
     private void addReadOnly(JPanel panel, GridBagConstraints gbc, int row, String text, String value) {
         gbc.gridy = row; gbc.insets = new Insets(row == 0 ? 0 : 12, 0, 5, 0);
         JLabel label = new JLabel(text); label.setFont(Theme.BODY_BOLD); panel.add(label, gbc);
@@ -86,12 +97,18 @@ public class ProfileFrame extends JFrame {
         panel.add(display, gbc);
     }
 
+    /**
+     * Adds an editable field to the profile form.
+     */
     private void addField(JPanel panel, GridBagConstraints gbc, int row, String text, JTextField field) {
         gbc.gridy = row; gbc.insets = new Insets(12, 0, 5, 0);
         JLabel label = new JLabel(text); label.setFont(Theme.BODY_BOLD); panel.add(label, gbc);
         gbc.gridy = row + 1; gbc.insets = new Insets(0, 0, 0, 0); panel.add(field, gbc);
     }
 
+    /**
+     * Validates and saves the updated profile information.
+     */
     private void saveProfile() {
         String emailText = email.getText().trim();
         String phoneText = phone.getText().trim();
@@ -111,5 +128,8 @@ public class ProfileFrame extends JFrame {
         }
     }
 
+    /**
+     * Returns an empty string when the provided value is null.
+     */
     private String safe(String value) { return value == null ? "" : value; }
 }

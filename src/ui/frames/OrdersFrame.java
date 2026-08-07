@@ -17,7 +17,9 @@ import service.OrderService;
 import ui.AppFrame;
 import ui.Theme;
 
-
+/**
+ * Displays a customer's order history.
+ */
 public class OrdersFrame extends JFrame {
     private final DefaultTableModel model = new DefaultTableModel(new Object[]{"Order ID", "Date", "Status", "Total"}, 0) {
         @Override public boolean isCellEditable(int row, int column) { 
@@ -25,6 +27,9 @@ public class OrdersFrame extends JFrame {
         }
     };
 
+    /**
+     * Creates an orders window for the specified application frame.
+     */
     public OrdersFrame(AppFrame app) {
         super("OmniCommerce - My Orders");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

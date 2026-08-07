@@ -6,10 +6,15 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import util.DBConnection;
 
-/** Stores payment results linked to an order. */
+/**
+ * Stores payment results linked to an order.
+ */
 public final class PaymentService {
     private PaymentService() {}
 
+    /**
+     * Saves a payment record for the specified order.
+     */
     public static boolean savePayment(int orderId, double amount, String method, String status) {
         String sql = "INSERT INTO payments (order_id, amount, method, status, payment_date) VALUES (?, ?, ?, ?, ?)";
         try {

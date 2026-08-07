@@ -17,13 +17,18 @@ import ui.AppFrame;
 import ui.Theme;
 import ui.components.UiFactory;
 
-
+/**
+ * Displays the login form and handles user authentication.
+ */
 public class LoginPanel extends JPanel {
     private final AppFrame app;
     private final JTextField usernameField = UiFactory.textField(24);
     private final JPasswordField passwordField = new JPasswordField(24);
     private final JButton loginButton = UiFactory.primaryButton("Login");
 
+    /**
+     * Creates the login panel for the specified application frame.
+     */
     public LoginPanel(AppFrame app) {
         this.app = app;
         setLayout(new GridBagLayout());
@@ -82,11 +87,17 @@ public class LoginPanel extends JPanel {
         add(card);
     }
 
+    /**
+     * Applies consistent styling to the password field.
+     */
     private void stylePasswordField() {
         passwordField.setFont(Theme.BODY);
         passwordField.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Theme.BORDER), BorderFactory.createEmptyBorder(8, 10, 8, 10)));
     }
 
+    /**
+     * Validates the supplied credentials and signs the user in.
+     */
     private void attemptLogin() {
         String username = usernameField.getText().trim();
         String password = new String(passwordField.getPassword());
@@ -108,11 +119,17 @@ public class LoginPanel extends JPanel {
         app.completeLogin(user);
     }
 
+    /**
+     * Clears the login form fields.
+     */
     public void clearForm() {
         usernameField.setText("");
         passwordField.setText("");
     }
 
+    /**
+     * Prepares the form for display by clearing values and focusing the username field.
+     */
     public void prepareForDisplay() {
         clearForm();
         SwingUtilities.invokeLater(() -> {

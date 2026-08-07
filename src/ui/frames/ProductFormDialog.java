@@ -26,6 +26,9 @@ import ui.Theme;
 import ui.components.UiFactory;
 import util.ImageUtil;
 
+/**
+ * Displays a form for creating or editing a product.
+ */
 public class ProductFormDialog extends JDialog {
     private static final String[] CATEGORIES = {
         "Electronics", "Computers", "Mobile & Accessories", "Fashion",
@@ -46,6 +49,9 @@ public class ProductFormDialog extends JDialog {
     private String savedImagePath;
     private JButton saveButton;
 
+    /**
+     * Creates a dialog for adding or editing a product.
+     */
     public ProductFormDialog(Frame owner, Product product, Runnable onSaved) {
         super(owner, product == null ? "Add Product" : "Edit Product", true);
         this.product = product;
@@ -64,6 +70,9 @@ public class ProductFormDialog extends JDialog {
         }
     }
 
+    /**
+     * Builds the dialog content and form controls.
+     */
     private JPanel createContent() {
         JPanel root = new JPanel(new BorderLayout(0, 16));
         root.setBackground(Theme.BACKGROUND);
@@ -188,6 +197,9 @@ public class ProductFormDialog extends JDialog {
         gbc.insets = new Insets(0, 0, 6, 0);
     }
 
+    /**
+     * Fills the form with the existing product data when editing.
+     */
     private void populateFields() {
         nameField.setText(product.getName());
         categoryBox.setSelectedItem(product.getCategory());
@@ -198,6 +210,9 @@ public class ProductFormDialog extends JDialog {
         updatePreview(savedImagePath, product.getImagePath() == null ? "No image selected" : new File(product.getImagePath()).getName());
     }
 
+    /**
+     * Opens a file chooser for selecting a product image.
+     */
     private void chooseImage() {
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogTitle("Select product image");
@@ -209,6 +224,9 @@ public class ProductFormDialog extends JDialog {
         }
     }
 
+    /**
+     * Clears the selected image and resets the preview state.
+     */
     private void clearImage() {
         selectedImageFile = null;
         savedImagePath = null;
@@ -224,6 +242,9 @@ public class ProductFormDialog extends JDialog {
         imageName.setText(filename == null ? "No image selected" : filename);
     }
 
+    /**
+     * Validates the form input and saves the product.
+     */
     private void saveProduct() {
         try {
             String name = nameField.getText().trim();

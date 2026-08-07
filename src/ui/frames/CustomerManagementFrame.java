@@ -22,7 +22,9 @@ import service.UserService;
 import ui.Theme;
 import ui.components.UiFactory;
 
-
+/**
+ * Displays and manages customer accounts in the application.
+ */
 public class CustomerManagementFrame extends JFrame {
     private final DefaultTableModel model = new DefaultTableModel(new Object[]{"ID", "Username", "Email", "Phone", "Address"}, 0) {
         @Override public boolean isCellEditable(int row, int column) { return false; }
@@ -31,6 +33,9 @@ public class CustomerManagementFrame extends JFrame {
     private final JTextField search = UiFactory.textField(20);
     private List<Customer> customers = new ArrayList<>();
 
+    /**
+     * Creates a customer management window owned by the specified frame.
+     */
     public CustomerManagementFrame(JFrame owner) {
         super("OmniCommerce - Customer Management");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -10,10 +10,14 @@ import model.Customer;
 import model.User;
 import util.DBConnection;
 
-
+/**
+ * Provides authentication operations for users and administrators.
+ */
 public class AuthService {
-    
 
+    /**
+     * Registers a new customer account if the username is available.
+     */
     public static void register(String username, String password, String email, String phone, String address) throws DuplicateUsernameException {
         if(usernameExists(username)){
             throw new DuplicateUsernameException(username);
@@ -38,6 +42,10 @@ public class AuthService {
             }
         }
     }
+
+    /**
+     * Authenticates a user and returns the corresponding account object.
+     */
     public static User login(String username, String password){
         
         try {
@@ -73,9 +81,11 @@ public class AuthService {
 
         return null;
     }
-    
-    
-    public static boolean  usernameExists(String username){
+
+    /**
+     * Checks whether a username already exists.
+     */
+    public static boolean usernameExists(String username){
         
         try {
             Connection conn = DBConnection.getConnection();
@@ -100,6 +110,9 @@ public class AuthService {
 
     }
 
+    /**
+     * Registers a new administrator account if the username is available.
+     */
     public static void addAdmin(String username, String password, String email, String phone, String address) throws DuplicateUsernameException{
         if(usernameExists(username)){
             throw new DuplicateUsernameException(username);

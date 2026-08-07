@@ -4,7 +4,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Creates and initializes the application database tables.
+ */
 public class DatabaseSetup {
+    /**
+     * Creates the required database tables if they do not already exist.
+     */
     public static void createTables() {
         Connection conn = DBConnection.getConnection();
         try {

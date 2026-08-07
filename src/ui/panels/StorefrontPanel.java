@@ -35,7 +35,9 @@ import ui.frames.ProfileFrame;
 import ui.frames.WishlistFrame;
 import util.ImageUtil;
 
-
+/**
+ * Displays the storefront catalog with search, filtering, and purchase actions.
+ */
 public class StorefrontPanel extends JPanel {
     private final AppFrame app;
     private final JPanel productGrid = new JPanel(new GridLayout(0, 4, 16, 16));
@@ -48,6 +50,9 @@ public class StorefrontPanel extends JPanel {
     private final JLabel resultLabel = UiFactory.mutedLabel("");
     private List<Product> allProducts = new ArrayList<>();
 
+    /**
+     * Creates the storefront panel for the specified application frame.
+     */
     public StorefrontPanel(AppFrame app) {
         this.app = app;
         setLayout(new BorderLayout());
@@ -59,6 +64,9 @@ public class StorefrontPanel extends JPanel {
         refreshView();
     }
 
+    /**
+     * Builds the storefront header with navigation and account actions.
+     */
     private JPanel createHeader() {
         JPanel header = new JPanel(new BorderLayout());
         header.setBackground(Theme.SURFACE);
@@ -119,6 +127,9 @@ public class StorefrontPanel extends JPanel {
         return header;
     }
 
+    /**
+     * Builds the main storefront content area and product browser.
+     */
     private JScrollPane createContent() {
         JPanel content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
@@ -191,6 +202,9 @@ public class StorefrontPanel extends JPanel {
         return scrollPane;
     }
 
+    /**
+     * Binds filter controls to the product list refresh logic.
+     */
     private void bindFilters() {
         searchField.addActionListener(e -> applyFilters());
         searchField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
@@ -202,6 +216,9 @@ public class StorefrontPanel extends JPanel {
         sortBox.addActionListener(e -> applyFilters());
     }
 
+    /**
+     * Refreshes the storefront view and reloads the current product catalog.
+     */
     public void refreshView() {
         headerHolder.removeAll();
         headerHolder.add(createHeader(), BorderLayout.CENTER);
@@ -212,12 +229,18 @@ public class StorefrontPanel extends JPanel {
         repaint();
     }
 
+    /**
+     * Loads the current catalog of products from the service layer.
+     */
     private void loadProducts() {
         allProducts = ProductService.getAllProducts();
         refreshCategories();
         applyFilters();
     }
 
+    /**
+     * Refreshes the category filter options based on the available products.
+     */
     private void refreshCategories() {
         Object selected = categoryBox.getSelectedItem();
         Set<String> categories = new LinkedHashSet<>();
@@ -233,6 +256,9 @@ public class StorefrontPanel extends JPanel {
         if (categoryBox.getSelectedIndex() < 0) categoryBox.setSelectedIndex(0);
     }
 
+    /**
+     * Applies the current search, category, and sort filters to the catalog.
+     */
     private void applyFilters() {
         if (productGrid == null) return;
         String query = searchField.getText().trim().toLowerCase(Locale.ROOT);
@@ -259,6 +285,9 @@ public class StorefrontPanel extends JPanel {
         renderProducts(filtered);
     }
 
+    /**
+     * Renders the products that match the active filters.
+     */
     private void renderProducts(List<Product> products) {
         productGrid.removeAll();
         for (Product product : products) {
@@ -274,6 +303,9 @@ public class StorefrontPanel extends JPanel {
         productGrid.repaint();
     }
 
+    /**
+     * Creates the card UI for a single product.
+     */
     private JPanel createProductCard(Product product) {
         JPanel card = UiFactory.cardPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
@@ -333,10 +365,16 @@ public class StorefrontPanel extends JPanel {
         return card;
     }
 
+    /**
+     * Opens the product details dialog for the selected product.
+     */
     private void showProductDetails(Product product) {
         new ProductDetailsDialog(app, app, product).setVisible(true);
     }
 
+    /**
+     * Saves the selected product to the current user's wishlist.
+     */
     private void saveToWishlist(Product product, JButton button) {
         if (!app.isLoggedIn()) {
             JOptionPane.showMessageDialog(this, "Please log in before saving products.", "Login required", JOptionPane.INFORMATION_MESSAGE);
@@ -354,6 +392,9 @@ public class StorefrontPanel extends JPanel {
         }
     }
 
+    /**
+     * Adds the selected product to the current user's cart.
+     */
     private void addProductToCart(Product product, JButton button) {
         if (!app.isLoggedIn()) {
             JOptionPane.showMessageDialog(this, "Please log in before adding products to your cart.", "Login required", JOptionPane.INFORMATION_MESSAGE);
@@ -391,6 +432,9 @@ public class StorefrontPanel extends JPanel {
         }.execute();
     }
 
+    /**
+     * Opens the cart view for the current user.
+     */
     private void openCart() {
         if (!app.isLoggedIn()) {
             JOptionPane.showMessageDialog(this, "Please log in to view your cart.", "Login required", JOptionPane.INFORMATION_MESSAGE);

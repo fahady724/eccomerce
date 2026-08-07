@@ -17,7 +17,9 @@ import ui.AppFrame;
 import ui.Theme;
 import ui.components.UiFactory;
 
-
+/**
+ * Displays the customer registration form and handles account creation.
+ */
 public class RegisterPanel extends JPanel {
     private final AppFrame app;
 
@@ -29,6 +31,9 @@ public class RegisterPanel extends JPanel {
     private final JPasswordField confirmPasswordField = new JPasswordField(24);
     private final JButton registerButton = UiFactory.primaryButton("Register");
 
+    /**
+     * Creates the registration panel for the specified application frame.
+     */
     public RegisterPanel(AppFrame app) {
         this.app = app;
         setLayout(new GridBagLayout());
@@ -87,6 +92,9 @@ public class RegisterPanel extends JPanel {
         add(card);
     }
 
+    /**
+     * Adds a labeled input field to the registration form.
+     */
     private void addField(JPanel card, GridBagConstraints c, String label, java.awt.Component field) {
         c.gridy++;
         card.add(new JLabel(label), c);
@@ -94,11 +102,17 @@ public class RegisterPanel extends JPanel {
         card.add(field, c);
     }
 
+    /**
+     * Applies consistent styling to password input fields.
+     */
     private void stylePasswordField(JPasswordField field) {
         field.setFont(Theme.BODY);
         field.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Theme.BORDER), BorderFactory.createEmptyBorder(8, 10, 8, 10)));
     }
 
+    /**
+     * Validates the form input and submits a new customer registration.
+     */
     private void attemptRegistration() {
         String username = usernameField.getText().trim();
         String email = emailField.getText().trim();
@@ -134,6 +148,9 @@ public class RegisterPanel extends JPanel {
     }
 
     
+    /**
+     * Clears all registration form fields.
+     */
     public void clearForm() {
         usernameField.setText("");
         emailField.setText("");
@@ -144,6 +161,9 @@ public class RegisterPanel extends JPanel {
     }
 
    
+    /**
+     * Prepares the form for display by clearing values and focusing the username field.
+     */
     public void prepareForDisplay() {
         clearForm();
         SwingUtilities.invokeLater(() -> {

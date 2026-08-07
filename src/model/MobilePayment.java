@@ -1,9 +1,15 @@
 package model;
 
+/**
+ * Represents a mobile wallet payment for an order.
+ */
 public class MobilePayment extends Payment {
     private String mobileNumber;
     private String provider; 
 
+    /**
+     * Creates a mobile payment with the specified amount, number, and provider.
+     */
     public MobilePayment(double amount, String mobileNumber, String provider) {
         super(amount);
         this.mobileNumber = mobileNumber;
@@ -18,6 +24,9 @@ public class MobilePayment extends Payment {
         return provider; 
     }
 
+    /**
+     * Processes the mobile payment after validating the number and provider.
+     */
     @Override
     public boolean processPayment() {
         if (mobileNumber == null) {
@@ -46,5 +55,6 @@ public class MobilePayment extends Payment {
             return false;
         }
         
+        return true;
     }
 }

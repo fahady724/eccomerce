@@ -26,7 +26,9 @@ import ui.frames.CustomerManagementFrame;
 import ui.frames.ProductFormDialog;
 import ui.frames.ReportsFrame;
 
-
+/**
+ * Displays administrative tools for product, order, and customer management.
+ */
 public class AdminDashboardPanel extends JPanel {
     private final AppFrame app;
     private final DefaultTableModel tableModel = new DefaultTableModel(new Object[]{"ID", "Name", "Category", "Price", "Stock"}, 0) {
@@ -38,6 +40,9 @@ public class AdminDashboardPanel extends JPanel {
     private final JPanel summaryPanel = new JPanel(new GridLayout(1, 4, 14, 14));
     private List<Product> products;
 
+    /**
+     * Creates the admin dashboard panel for the specified application frame.
+     */
     public AdminDashboardPanel(AppFrame app) {
         this.app = app;
         setLayout(new BorderLayout(16, 16));
@@ -48,6 +53,9 @@ public class AdminDashboardPanel extends JPanel {
         refreshData();
     }
 
+    /**
+     * Builds the dashboard header with navigation actions.
+     */
     private JPanel createHeader() {
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(false);
@@ -68,6 +76,9 @@ public class AdminDashboardPanel extends JPanel {
         return header;
     }
 
+    /**
+     * Builds the main product management section of the dashboard.
+     */
     private JPanel createCenter() {
         JPanel center = new JPanel(new BorderLayout(0, 16));
         center.setOpaque(false);
@@ -114,6 +125,9 @@ public class AdminDashboardPanel extends JPanel {
         return center;
     }
 
+    /**
+     * Reloads dashboard data and refreshes the visible summaries.
+     */
     public void refreshData() {
         products = ProductService.getAllProducts();
         tableModel.setRowCount(0);
@@ -129,6 +143,9 @@ public class AdminDashboardPanel extends JPanel {
         summaryPanel.repaint();
     }
 
+    /**
+     * Creates a summary card for dashboard metrics.
+     */
     private JPanel statCard(String label, String value) {
         JPanel card = UiFactory.cardPanel();
         card.setLayout(new BorderLayout(0, 8));
@@ -140,6 +157,9 @@ public class AdminDashboardPanel extends JPanel {
         return card;
     }
 
+    /**
+     * Opens the product form for the currently selected product.
+     */
     private void editSelected() {
         int row = productTable.getSelectedRow();
         if (row < 0) {
@@ -149,6 +169,9 @@ public class AdminDashboardPanel extends JPanel {
         showProductForm(products.get(row));
     }
 
+    /**
+     * Deletes the currently selected product after confirmation.
+     */
     private void deleteSelected() {
         int row = productTable.getSelectedRow();
         if (row < 0) {
@@ -163,11 +186,17 @@ public class AdminDashboardPanel extends JPanel {
         }
     }
 
+    /**
+     * Opens the product form for creating or editing a product.
+     */
     private void showProductForm(Product product) {
         java.awt.Frame owner = (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this);
         new ProductFormDialog(owner, product, this::refreshData).setVisible(true);
     }
 
+    /**
+     * Displays an order management dialog for updating order statuses.
+     */
     private void showOrderManager() {
         java.util.List<Order> orders = OrderService.getAllOrders();
         DefaultTableModel orderModel = new DefaultTableModel(new Object[]{"Order ID", "Customer ID", "Date", "Status", "Total"}, 0) {

@@ -20,7 +20,9 @@ import ui.AppFrame;
 import ui.Theme;
 import ui.components.UiFactory;
 
-
+/**
+ * Displays the current customer's shopping cart and actions for checkout.
+ */
 public class CartFrame extends JFrame {
     private final AppFrame app;
     private final DefaultTableModel model = new DefaultTableModel(new Object[]{"Product", "Price", "Quantity", "Subtotal"}, 0) {
@@ -32,6 +34,9 @@ public class CartFrame extends JFrame {
     private final JLabel totalLabel = new JLabel();
     private List<OrderItem> currentItems;
 
+    /**
+     * Creates a cart window for the specified application frame.
+     */
     public CartFrame(AppFrame app) {
         super("OmniCommerce - Shopping Cart");
         this.app = app;

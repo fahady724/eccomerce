@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Represents a credit card payment for an order.
+ */
 public class CreditCardPay extends Payment{
     private String cardNumber;
     private String cardHolderName;
@@ -19,6 +22,9 @@ public class CreditCardPay extends Payment{
         return expiry;
     }
 
+    /**
+     * Creates a credit card payment with the specified details.
+     */
     public CreditCardPay(double amount, String cardNumber, String cardHolderName, String cvv, String expiry){
         super(amount);
         this.cardNumber = cardNumber;
@@ -27,7 +33,9 @@ public class CreditCardPay extends Payment{
         this.expiry = expiry;
     }
 
-
+    /**
+     * Processes the credit card payment after validating the card details.
+     */
     @Override
     public boolean processPayment() {
         // Validate card number — must be 16 digits

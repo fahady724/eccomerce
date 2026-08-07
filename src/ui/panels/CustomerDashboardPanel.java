@@ -9,8 +9,13 @@ import ui.AppFrame;
 import ui.Theme;
 import ui.components.UiFactory;
 
-
+/**
+ * Displays the placeholder customer dashboard view.
+ */
 public class CustomerDashboardPanel extends JPanel {
+    /**
+     * Creates the customer dashboard panel for the specified application frame.
+     */
     public CustomerDashboardPanel(AppFrame app) {
         setLayout(new BorderLayout());
         setBackground(Theme.BACKGROUND);

@@ -5,9 +5,14 @@ import service.AuthService;
 import ui.AppFrame;
 import util.DatabaseSetup;
 
-
+/**
+ * Launches the e-commerce application and initializes the default environment.
+ */
 public class Main {
 
+    /**
+     * Starts the application and prepares the database and UI.
+     */
     public static void main(String[] args) {
         DatabaseSetup.createTables();
         createDefaultAdmin();
@@ -22,6 +27,9 @@ public class Main {
     }
 
 
+    /**
+     * Ensures a default administrator account exists on startup.
+     */
     private static void createDefaultAdmin() {
         try {
             AuthService.addAdmin(

@@ -17,8 +17,13 @@ import service.OrderService;
 import ui.Theme;
 import ui.components.UiFactory;
 
-
+/**
+ * Displays the details of a specific order.
+ */
 public class OrderDetailsFrame extends JFrame {
+    /**
+     * Creates a frame showing the details of the specified order.
+     */
     public OrderDetailsFrame(JFrame owner, Order order) {
         super("Order #" + order.getOrderId());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

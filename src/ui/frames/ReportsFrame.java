@@ -17,8 +17,13 @@ import ui.AppFrame;
 import ui.Theme;
 import ui.components.UiFactory;
 
-
+/**
+ * Displays sales and inventory reporting data for administrators.
+ */
 public class ReportsFrame extends JFrame {
+    /**
+     * Creates a reports window for the specified application frame.
+     */
     public ReportsFrame(AppFrame app) {
         super("OmniCommerce - Reports & Analytics");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -58,6 +63,9 @@ public class ReportsFrame extends JFrame {
         setContentPane(root);
     }
 
+    /**
+     * Creates a summary card for a report statistic.
+     */
     private JPanel stat(String label, String value) {
         JPanel p = UiFactory.cardPanel();
         p.setLayout(new BorderLayout(0, 8));
@@ -66,6 +74,9 @@ public class ReportsFrame extends JFrame {
         p.add(v, BorderLayout.CENTER); return p;
     }
 
+    /**
+     * Builds a table view for report rows.
+     */
     private JScrollPane table(List<Object[]> rows, String[] columns, int moneyColumn) {
         DefaultTableModel m = readonly(columns);
         for (Object[] row : rows) {
@@ -77,11 +88,17 @@ public class ReportsFrame extends JFrame {
         return scroll(new JTable(m));
     }
 
+    /**
+     * Wraps a table in a scroll pane with the standard table styling.
+     */
     private JScrollPane scroll(JTable t) {
         t.setRowHeight(32); t.setFont(Theme.BODY); t.getTableHeader().setFont(Theme.BODY_BOLD);
         return new JScrollPane(t);
     }
 
+    /**
+     * Creates a read-only table model for report data.
+     */
     private DefaultTableModel readonly(String[] columns) {
         return new DefaultTableModel(columns, 0) {
             @Override public boolean isCellEditable(int r, int c) { 
