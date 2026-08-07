@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # E Commerce Management System Using Java and SQLite
 
 A desktop based E Commerce Management System developed using Java Swing and SQLite for the CSE205 Object Oriented Programming course.
@@ -256,4 +255,3 @@ Student ID: **253174038**
 **Presidency University**
 
 Course: **CSE205 Object Oriented Programming**
->>>>>>> 8d3de83 (Finalize project documentation and Javadoc)
