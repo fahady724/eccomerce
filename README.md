@@ -12,19 +12,6 @@ Before running the project, ensure the following are installed:
 - SQLite JDBC Driver (`sqlite-jdbc.jar`)
 
 
-# Project Structure
-
-ecommerce_final/
-│
-├── src/                     # Source code
-├── data/
-│   └── product_images/      # Product images
-├── lib/                     # SQLite JDBC library
-├── bin/                     # Compiled classes (generated)
-├── Main.java
-└── README.md
-
-
 # Setup Instructions
 
 # 1. Clone the Repository
