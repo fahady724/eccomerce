@@ -33,8 +33,8 @@ public class Main {
     private static void createDefaultAdmin() {
         try {
             AuthService.addAdmin(
-                    "admin",
-                    "admin01",
+                    "fahad",
+                    "fahad01",
                     "fahad@email.com",
                     "01972742013",
                     "Dhaka"
