@@ -54,7 +54,7 @@ public class MobilePayment extends Payment {
             System.out.println("Invalid provider! Use bKash or Nagad.");
             return false;
         }
-        
+        setStatus("PAID");
         return true;
     }
 }
